@@ -8,9 +8,8 @@ class logger(Node):
     def __init__(self):
         super().__init__('logger')
 
-        # Define a compatible QoS profile
         qos_profile = QoSProfile(
-            reliability=QoSReliabilityPolicy.BEST_EFFORT,  # Change to match publisher QoS
+            reliability=QoSReliabilityPolicy.BEST_EFFORT,
             history=QoSHistoryPolicy.KEEP_LAST,
             depth=10
         )
@@ -18,7 +17,8 @@ class logger(Node):
         self.subscription = self.create_subscription(
             State,
             '/mavros/state',
-            self.listener_callback
+            self.listener_callback,
+            qos_profile
         )
 
         self.subscription = self.create_subscription(
@@ -29,8 +29,8 @@ class logger(Node):
         )
 
     def listener_callback(self, global_msg, state_msg):
-        message = f"Received GPS Data: {global_msg.latitude}, {global_msg.longitude}, {global_msg.altitude}\n"
         if str(state_msg.mode) == "GUIDED":   
+            message = f"Received GPS Data: {global_msg.latitude}, {global_msg.longitude}, {global_msg.altitude}\n"
             with open("/home/james/ros2_ws/src/NavLogger/logged.txt", 'a') as file:
                 file.write(message)
 
