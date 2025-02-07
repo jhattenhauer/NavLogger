@@ -30,9 +30,13 @@ class logger(Node):
 
     def listener_callback(self, global_msg, state_msg):
         if str(state_msg.mode) == "GUIDED":   
-            message = f"Received GPS Data: {global_msg.latitude}, {global_msg.longitude}, {global_msg.altitude}\n"
-            with open("/home/james/ros2_ws/src/NavLogger/logged.txt", 'a') as file:
-                file.write(message)
+            file = open("/home/james/Documents/dev/NavLogger/test.waypoints", 'r')
+            index = str(file.readlines()[-1])[0]
+            message = f"{index+1}\t0\t3\t16\t0.00000000\t0.00000000\t0.00000000\t0.00000000\t{global_msg.latitude}\t{global_msg.longitude}\t{global_msg.altitude}\t100.000000"
+            file = open("/home/james/Documents/dev/NavLogger/test.waypoints", 'a')
+            file.write(message)
+
+#example   6	0	3	16	0.00000000	0.00000000	0.00000000	0.00000000	47.57154050	-52.82818790	100.000000	1
 
 def main(args=None):
     rclpy.init(args=args)
