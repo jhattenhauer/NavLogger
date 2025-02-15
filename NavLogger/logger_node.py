@@ -33,7 +33,6 @@ class logger(Node):
         )
 
     def listener_callback(self, global_msg, state_msg):
-
         if str(state_msg.mode) == "GUIDED":   
             try:        
                 node_number = str(file.readlines()[-1])[0]
@@ -41,7 +40,6 @@ class logger(Node):
                 file.write(message)
             except:
                 print("An Error Occured")
-#example   6	0	3	16	0.00000000	0.00000000	0.00000000	0.00000000	47.57154050	-52.82818790	100.000000	1
 
 def main(args=None):
     if os.stat(file_path).st_size == 0: #checks and writes if header line in file
@@ -54,6 +52,9 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+#Example coordinate
+#6	0	3	16	0.00000000	0.00000000	0.00000000	0.00000000	47.57154050	-52.82818790	100.000000	1
 
 #chatgpt code for distance>5m
 #get roberts function
